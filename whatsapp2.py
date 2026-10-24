@@ -322,7 +322,7 @@ def login():
             session['username'] = user[1]
             return redirect('/')
         return render_template_string(LOGIN_HTML, error="Invalid credentials!")
-        return render_template_string(LOGIN_HTML)
+        return render_template('login.html)
 
 @app.route('/logout')
 def logout():
