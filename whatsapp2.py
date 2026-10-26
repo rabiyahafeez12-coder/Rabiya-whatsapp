@@ -311,7 +311,7 @@ def register():
 def login():
     if request.method == 'POST':
         username = request.form.get('username', '').strip()
-        password = request.form.get('password')
+        password = request.form.get('password', '').strip()
         conn = sqlite3.connect('whatsapp.db')
         cursor = conn.cursor()
         cursor.execute("SELECT id, username FROM users WHERE LOWER(username) = LOWER(?) AND password = ?", (username, password))
@@ -321,8 +321,9 @@ def login():
             session['user_id'] = user[0]
             session['username'] = user[1]
             return redirect('/')
-        return render_template_string(LOGIN_HTML, error="Invalid credentials!")
-        return render_template('login.html')
+        return render_template_string(LOGIN_HTML, error="Invalid credentials")
+    
+    return render_template_string(LOGIN_HTML)
 
 @app.route('/logout')
 def logout():
